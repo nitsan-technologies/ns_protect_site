@@ -1,0 +1,103 @@
+
+plugin.tx_nsprotectsite_nsprotectsite {
+    view {
+        templateRootPaths.0 = EXT:{extension.shortExtensionKey}/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_nsprotectsite_nsprotectsite.view.templateRootPath}
+        partialRootPaths.0 = EXT:ns_protect_site/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_nsprotectsite_nsprotectsite.view.partialRootPath}
+        layoutRootPaths.0 = EXT:tx_nsprotectsite/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_nsprotectsite_nsprotectsite.view.layoutRootPath}
+    }   
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+    mvc {
+        callDefaultActionIfActionCantBeResolved = 1
+    }
+    settings{
+        protectsitelogo = {$plugin.tx_nsprotectsite_nsprotectsite.settings.protectsitelogo}        
+        bgimage = {$plugin.tx_nsprotectsite_nsprotectsite.settings.bgimage}
+        bgcoloractive = {$plugin.tx_nsprotectsite_nsprotectsite.settings.bgcoloractive}
+        bgcolor = {$plugin.tx_nsprotectsite_nsprotectsite.settings.bgcolor}
+        linkpid = {$plugin.tx_nsprotectsite_nsprotectsite.settings.linkpid}
+    }
+}
+page.885544 >
+page.885544 = USER
+page.885544{
+  typeNum = 88889
+  userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+  pluginName = Nsprotectsite
+  extensionName = NsProtectSite
+  controller = ProtectPages
+  vendorName = Nitsan  
+  switchableControllerActions{
+    ProtectPages{
+      1 = load
+    }
+  }  
+}
+
+# set type for load month using ajax
+loginAction = PAGE
+loginAction {
+    typeNum = 1234
+    config {
+        disableAllHeaderCode = 1        
+        xhtml_cleaning = 0
+        admPanel = 0
+    }
+    
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        pluginName = Nsprotectsite
+        extensionName = NsProtectSite
+        controller = ProtectPages
+        vendorName = Nitsan  
+        switchableControllerActions {
+          ProtectPages {
+            1 = login
+          }
+        }        
+    }
+}
+
+formAction = PAGE
+formAction {
+    headerData{
+    10 = TEXT
+    10.value(            
+            <meta charset="utf-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="format-detection" content="telephone=no">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        )
+    }
+    includeCSS{
+        protectSiteCss = EXT:ns_protect_site/Resources/Public/nsprotect.css
+    }
+    typeNum = 88889
+    config {        
+        xhtml_cleaning = 0
+        admPanel = 0
+    }
+    
+    10 = USER
+    10 {
+        userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+        pluginName = Nsprotectsite
+        extensionName = NsProtectSite
+        controller = ProtectPages
+        vendorName = Nitsan  
+        switchableControllerActions {
+          ProtectPages {
+            1 = form
+          }
+        }        
+    }
+}

@@ -1,0 +1,29 @@
+
+plugin.tx_nsprotectsite_nsprotectsite {
+    view {
+        # cat=plugin.tx_nsprotectsite/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:ns_protect_site/Resources/Private/Templates/
+        # cat=plugin.tx_nsprotectsite/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:ns_protect_site/Resources/Private/Partials/
+        # cat=plugin.tx_nsprotectsite/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:ns_protect_site/Resources/Private/Layouts/
+    } 
+    settings{
+
+        # cat=plugin.tx_nsprotectsite/var1; type=string; label=Set logo
+        protectsitelogo =        
+
+        # cat=plugin.tx_nsprotectsite/var4; type=string; label=Background image
+        bgimage = 
+
+        # cat=plugin.tx_nsprotectsite/var5; type=boolean; label=Use plain color for background
+        bgcoloractive = 
+
+        # cat=plugin.tx_nsprotectsite/var6; type=color; label=Set background color
+        bgcolor = 
+
+        # cat=plugin.tx_nsprotectsite/var7; type=string; label=Set return page id (User can return to this page if He/She does not have password)
+        linkpid = 
+    }
+
+}

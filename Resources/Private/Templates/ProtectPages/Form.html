@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:blog="http://typo3.org/ns/T3G/AgencyPack/Blog/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:if condition="{settings.bgcoloractive}">
+	<f:then>
+		<div class="body" style="background-color: {settings.bgcolor};"></div>
+	</f:then>
+	<f:else>
+		<div class="body" style="background-image: url({f:if(condition: '{settings.bgimage}', then: '{settings.bgimage}', else: 'typo3conf/ext/ns_protect_site/Resources/Public/img/default-bg.jpg')});"></div>
+	</f:else>
+</f:if>
+<div class="grad"></div>
+
+<div class="ns-protect-site-page">
+	<div class="login">
+		<f:if condition="{settings.protectsitelogo}">
+			<f:then>
+				<div>
+					<f:image width='100%' src="{settings.protectsitelogo}" />
+				</div>
+			</f:then>
+		</f:if>
+		<h3 class="login-first">			
+			<f:translate key="loginfrst" extensionName="ns_protect_site" />				
+		</h3>
+		<f:form action="login" method="post" additionalParams="{type:'1234'}">
+			<div class="form-group formular_fieldset">
+				<f:form.password name="pass" id="pass" additionalAttributes="{placeholder: 'password'}" />
+				<f:form.submit name="submit" value="Login" class="login-btn" />				
+			</div>
+			<f:if condition="{inavlid}">
+				<h3 class="error">					
+					<f:translate key="addvalidpass" extensionName="ns_protect_site"/>						
+				</h3>
+			</f:if>       
+			<f:if condition="{settings.linkpid}">
+				<div class="fontstyle">
+					<f:translate key="noaccess" /> <f:link.typolink class="fontstyle" parameter="{settings.linkpid}"><f:translate key="backpage" /></f:link.typolink>. 
+				</div>
+			</f:if>
+		</f:form>
+	</div>
+</div>
+</html>

@@ -1,0 +1,23 @@
+{
+    "name": "nitsan/ns-protect-site",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "authors": [],
+    "require": {
+        "typo3/cms-core": "^7.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nitsan\\NsProtectSite\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nitsan\\NsProtectSite\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "nitsan/ns-protect-site": "self.version",
+        "typo3-ter/ns-protect-site": "self.version"
+    }
+}

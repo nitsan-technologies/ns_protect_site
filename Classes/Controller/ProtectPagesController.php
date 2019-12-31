@@ -25,9 +25,7 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * @return void
      */
     public function loadAction()
-    {
-        //\TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($GLOBALS['TSFE']->page);die;
-        //$this->contentObj = $this->configurationManager->getContentObject();
+    {        
         $data = $GLOBALS['TSFE']->page;
         $pageUid = $data['uid'];
 
@@ -46,6 +44,7 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $this->redirectToUri($uri);
             }
         }
+        return true;
     }
 
     /**
@@ -56,13 +55,12 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     public function loginAction()
     {
         $params = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('tx_nsprotectsite_nsprotectsite');
-        //$this->contentObj = $this->configurationManager->getContentObject();
 
         $data = $GLOBALS['TSFE']->page;
         $saltedPassword = $data['tx_nsprotectsite_protect_password'];
         $pass = $params['pass'];
 
-        $success = false; // keeps status if plain-text password matches given salted user password hash
+        $success = false;
 
         if ($GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] == 'rsa') {
             if ($saltedPassword == $pass) {
@@ -78,12 +76,10 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
             if ($saltedPassword == $password) {
                 $success = true;
             }
-        } else {
-            if (\TYPO3\CMS\Core\Crypto\PasswordHashing\SaltedPasswordsUtility::isUsageEnabled('BE')) {
-                $objSalt = \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::getSaltingInstance($saltedPassword);
-                if (is_object($objSalt)) {
-                    $success = $objSalt->checkPassword($pass, $saltedPassword);
-                }
+        } else {            
+            $objSalt = \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::get($saltedPassword,'BE');
+            if (is_object($objSalt)) {
+                $success = $objSalt->checkPassword($pass, $saltedPassword);
             }
         }
 

@@ -29,12 +29,21 @@ $fields = [
 // Add new fields to pages:
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addTCAcolumns('pages', $fields);
 
-// Make fields visible in the TCEforms:
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+if (version_compare(TYPO3_branch, '10.0', '<')) {
+    // Make fields visible in the TCEforms:
+  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
     'pages', // Table name
-    '--div--;LLL:EXT:ns_protect_site/Resources/Private/Language/locallang_db.xlf:tx_nsprotectsite_domain_model_protectpages;tx_nsprotectsite', // Field list to add
-    '1'// List of specific types to add the field list to. (If empty, all type entries are affected)
-);
+    '--div--;LLL:EXT:ns_protect_site/Resources/Private/Language/locallang_db.xlf:tx_nsprotectsite_domain_model_protectpages;tx_nsprotectsite', 
+    '1' // List of specific types to add the field list to. (If empty, all type entries are affected)  
+  );
+} else {
+  // Make fields visible in the TCEforms:
+  \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addToAllTCAtypes(
+    'pages', // Table name
+    '--palette--;LLL:EXT:ns_protect_site/Resources/Private/Language/locallang_db.xlf:tx_nsprotectsite_domain_model_protectpages;tx_nsprotectsite', 
+    '1' // List of specific types to add the field list to. (If empty, all type entries are affected)  
+  );
+}
 
 // Add the new palette:
 $GLOBALS['TCA']['pages']['palettes']['tx_nsprotectsite'] = [

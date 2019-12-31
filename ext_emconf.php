@@ -1,7 +1,7 @@
 <?php
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => '[NITSAN] Password Protect TYPO3 Plugin',
+    'title' => '[NITSAN] Password Protected TYPO3',
     'description' => 'This extension will help you to quickly password protected TYPO3 pages without frontend users management, Check manual for more details. Live-Demo: https://demo.t3terminal.com/t3t-extensions/general-utility/protect-site?inavlid=1&type=88889 You can download PRO version for more-features & free-support at https://t3terminal.com/password-protect-site-typo3-plugin/',
     'category' => 'plugin',
     'author' => 'T3: Milan Rathod, QA: Siddharth Sheth',

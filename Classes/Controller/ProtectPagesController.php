@@ -77,7 +77,7 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $success = true;
             }
         } else {
-            $passwordHashFactory = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
+            $passwordHashFactory = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::class);
             $objSalt = $passwordHashFactory->get($saltedPassword,'BE');
             if (is_object($objSalt)) {
                 $success = $objSalt->checkPassword($pass, $saltedPassword);

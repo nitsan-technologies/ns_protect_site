@@ -1,6 +1,9 @@
 <?php
 namespace Nitsan\NsProtectSite\Controller;
 
+use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
+use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+
 session_start();
 
 /***
@@ -22,10 +25,10 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
     /**
      * action list
      *
-     * @return void
+     * @return bool
      */
     public function loadAction()
-    {        
+    {
         $data = $GLOBALS['TSFE']->page;
         $pageUid = $data['uid'];
 
@@ -51,6 +54,7 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      * action login
      *
      * @return void
+     * @throws InvalidPasswordHashException|StopActionException
      */
     public function loginAction()
     {
@@ -67,17 +71,17 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $success = true;
             }
         } elseif ($GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] == 'md5') {
-            $password == md5($pass);
+            $password = md5($pass);
             if ($saltedPassword == $password) {
                 $success = true;
             }
         } elseif ($GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] === 'sha1') {
-            $password == sha1($pass);
+            $password = sha1($pass);
             if ($saltedPassword == $password) {
                 $success = true;
             }
-        } else {            
-            $objSalt = \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory::get($saltedPassword,'BE');
+        } else {
+            $objSalt = (new \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory)->get($saltedPassword, 'BE');
             if (is_object($objSalt)) {
                 $success = $objSalt->checkPassword($pass, $saltedPassword);
             }

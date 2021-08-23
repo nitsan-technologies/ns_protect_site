@@ -81,7 +81,11 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
                 $success = true;
             }
         } else {
-            $objSalt = (new \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory)->get($saltedPassword, 'BE');
+            if (version_compare(TYPO3_branch, '9.4', '<')) {
+                $objSalt = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance($saltedPassword, 'BE');
+            } else {
+                $objSalt = (new \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory)->get($saltedPassword, 'BE');
+            }
             if (is_object($objSalt)) {
                 $success = $objSalt->checkPassword($pass, $saltedPassword);
             }

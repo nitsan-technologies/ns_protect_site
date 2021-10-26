@@ -65,10 +65,20 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
         $pass = $params['pass'];
 
         $success = false;
-
         if ($GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] == 'rsa') {
-            if ($saltedPassword == $pass) {
-                $success = true;
+            if (version_compare(TYPO3_branch, '9.4', '<')) {
+                if (\TYPO3\CMS\Saltedpasswords\Utility\SaltedPasswordsUtility::isUsageEnabled('FE')) {
+                    $objSalt = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance(NULL);
+                    if (is_object($objSalt)) {
+                        $saltedPassword = $objSalt->getHashedPassword($saltedPassword);
+                    }
+                }
+                $objSalt = \TYPO3\CMS\Saltedpasswords\Salt\SaltFactory::getSaltingInstance($saltedPassword, 'BE');
+            } else {
+                $objSalt = (new \TYPO3\CMS\Core\Crypto\PasswordHashing\PasswordHashFactory)->get($saltedPassword, 'BE');
+            }
+            if (is_object($objSalt)) {
+                $success = $objSalt->checkPassword($pass, $saltedPassword);
             }
         } elseif ($GLOBALS['TYPO3_CONF_VARS']['BE']['loginSecurityLevel'] == 'md5') {
             $password = md5($pass);

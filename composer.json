@@ -32,8 +32,8 @@
         "typo3-ter/ns-protect-site": "self.version"
     },
     "extra": {
-		"typo3/cms": {
-			"extension-key": "ns_protect_site"
-		}
-	}
+	 "typo3/cms": {
+		"extension-key": "ns_protect_site"
+	 }
+    }
 }

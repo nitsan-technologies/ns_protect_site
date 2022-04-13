@@ -3,8 +3,8 @@ namespace Nitsan\NsProtectSite\Controller;
 
 use TYPO3\CMS\Core\Crypto\PasswordHashing\InvalidPasswordHashException;
 use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-session_start();
 
 /***
  *
@@ -29,6 +29,8 @@ class ProtectPagesController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCon
      */
     public function loadAction()
     {
+        $sessionService = GeneralUtility::makeInstance(\TYPO3\CMS\Install\Service\SessionService::class);
+        $sessionService->startSession();
         $data = $GLOBALS['TSFE']->page;
         $pageUid = $data['uid'];
 

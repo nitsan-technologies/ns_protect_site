@@ -84,8 +84,14 @@ class ProtectPagesController extends ActionController
         $data = $GLOBALS['TSFE']->page;
         $saltedPassword = $data['tx_nsprotectsite_protect_password'];
 
-        $objSalt = (new PasswordHashFactory)->get($saltedPassword, 'BE');
-        $success = $objSalt->checkPassword($this->request->getArguments()['pass'], $saltedPassword);
+        $password = $this->request->getArguments()['pass'] ?? null;
+
+        // Treat a missing password (e.g. a GET request to the form target) like a wrong one
+        $success = false;
+        if (is_string($password) && $password !== '') {
+            $objSalt = (new PasswordHashFactory)->get($saltedPassword, 'BE');
+            $success = $objSalt->checkPassword($password, $saltedPassword);
+        }
 
         $pageUid = $data['uid'];
         $uriBuilder = $this->uriBuilder;

@@ -15,25 +15,26 @@
     ],
     "authors": [
         {
-          "name": "NITSAN Technologies",
-          "role": "Developer",
-          "homepage": "https://www.nitsan.in/"
+            "name": "NITSAN Technologies",
+            "role": "Developer",
+            "homepage": "https://www.nitsan.in/"
         }
     ],
     "require": {
-       "typo3/cms-core": "^7.0 || ^8.0  || ^9.0 || ^10.0  || ^11.0 "
+        "typo3/cms-core": "^7.0 || ^8.0  || ^9.0 || ^10.0  || ^11.0 ",
+        "nitsan/ns-license": "^14.5.4"
     },
     "autoload": {
         "psr-4": {
             "Nitsan\\NsProtectSite\\": "Classes"
         }
-    },    
+    },
     "replace": {
         "typo3-ter/ns-protect-site": "self.version"
     },
     "extra": {
-	 "typo3/cms": {
-		"extension-key": "ns_protect_site"
-	 }
+        "typo3/cms": {
+            "extension-key": "ns_protect_site"
+        }
     }
 }
